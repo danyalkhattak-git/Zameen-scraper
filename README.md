@@ -34,9 +34,18 @@ The scraped data provides a rich foundation for various real estate market analy
 2.  **Weighted Average to Overcome Outliers:**
     * The project highlights the importance of using a **weighted average for 'Price Per Marla'**. By weighting each property's 'Price Per Marla' by its `Area (Marla)`, the average becomes more representative of the overall market price per unit area. This approach effectively **mitigates the disproportionate influence of "overvalued" outliers** (e.g., small plots with unusually high per-marla prices) that would otherwise skew a simple average. The formula used is `Sum(Total Property Price) / Sum(Total Area in Marla)`.
 
-3.  **Geospatial Analysis & Heatmap Visualization:**
-    * The scraped `Latitude` and `Longitude` data enables powerful geospatial analysis. The project demonstrates the concept of creating **heatmaps (or interpolated surfaces)** to visualize price trends (e.g., `Price_Per_Marla`) across different geographical regions of the city. This allows for identifying "hot spots" of high property value and understanding spatial price distribution.
-    * Tools like **Python's `Folium`** (for interactive web maps) and dedicated GIS software like **QGIS** (for advanced spatial interpolation and visualization) are suitable for this kind of analysis.
+3.  **Geospatial Analysis & Visualization:**
+    * The scraped `Latitude` and `Longitude` data enable powerful geospatial analysis and mapping.
+
+    * **Point Pattern Maps (Dot Maps):**
+        * This type of visualization plots each individual property as a distinct point on a map.
+        * The **color of each point can be used to represent a variable** (e.g., higher prices in red, lower prices in blue, or different property types with distinct colors).
+        * It helps in identifying **clusters of properties**, urban development patterns, and the distribution of specific property characteristics at a granular level. It shows *where* the data points actually exist.
+
+    * **Heatmaps (Interpolated Surfaces):**
+        * In contrast to point maps, heatmaps visualize interpolated data, creating a **continuous surface** that estimates values (like `Price_Per_Marla`) even in areas where there are no direct property listings. This helps to identify broad spatial trends and "hot spots" of value across an entire region.
+
+    * Tools like **Python's `Folium`** (for interactive web maps and heatmaps) and dedicated GIS software like **QGIS** (for advanced spatial interpolation and visualization) are suitable for creating these maps.
 
 ## Key Technologies Used
 
@@ -48,7 +57,8 @@ The scraped data provides a rich foundation for various real estate market analy
 * **`pandas`**: For data cleaning, transformation, and CSV output.
 * **`concurrent.futures` (ThreadPoolExecutor)**: For implementing multithreading.
 * **`datetime`**: For handling date/time calculations.
-* **(Optional for Visualization):** `folium`, `numpy`, `QGIS`.
+* **`folium` (for interactive maps)**: Used for visualizing point patterns and heatmaps.
+* **`numpy`**: For numerical operations, especially with `NaN` handling.
 
 ## How to Use/Run the Scraper
 
@@ -56,7 +66,7 @@ The scraped data provides a rich foundation for various real estate market analy
     * Install Python 3.x.
     * Install the required libraries:
         ```bash
-        pip install requests beautifulsoup4 pandas
+        pip install requests beautifulsoup4 pandas folium
         ```
 
 2.  **Clone the Repository:**
@@ -73,6 +83,7 @@ The scraped data provides a rich foundation for various real estate market analy
     ```
     * The script will print progress to the console.
     * Upon completion, a `zameen_listings_final.csv` file will be generated in the same directory.
+    * If you enable the Folium heatmap code, an `zameen_property_heatmap.html` or `zameen_price_per_marla_heatmap.html` will also be generated.
 
 ## Future Enhancements & Further Analysis Ideas
 
@@ -83,6 +94,4 @@ The scraped data provides a rich foundation for various real estate market analy
 * **Interactive Dashboard:** Create an interactive dashboard (e.g., using Dash or Streamlit) to visualize the scraped data, including the price heatmaps.
 * **Time Series Analysis:** Track price changes for specific locations or property types over time by running the scraper periodically.
 
-## Disclaimer
-
-This scraper is intended for educational and personal research purposes only. Please ensure you comply with Zameen.com's `robots.txt` file and Terms of Service. Be mindful of your request rate to avoid overloading their servers or getting your IP address blocked. The author is not responsible for any misuse of this code.
+![image](https://github.com/user-attachments/assets/e6fbb356-9a1c-4d10-b09c-8482c28d7a90)
